@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Messages</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+    <div th:replace="~{navigation :: navigation(Messages)}"></div>
+
+    <h1 th:text="${name}"></h1>
+
+    <span th:if="${all_messages.size()} == 0">There are no messages</span>
+    <ul th:each="message1 : ${all_messages}" class="list-group list-group-flush">
+        <li class="list-group-item" th:text="${message1.fromUser} + ': ' + ${message1.messageText}"></li>
+    </ul>
+
+    <div style="padding-top: 30px" class="panel-body">
+        <form th:action="@{'/messages/' + ${name} + '/send'}" th:object="${message}" method="POST" class="form-horizontal">
+            <div style="margin-bottom: 25px" class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                <input type="text" th:field="*{messageText}" name="messageText" placeholder="Message" class="form-control">
+            </div>
+            <div style="margin-top: 10px" class="form-group">
+                <div class="col-sm-6 controls">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

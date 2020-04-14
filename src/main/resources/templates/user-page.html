@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <title>User</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div th:replace="~{navigation :: navigation(Profile)}"/>
+    <h1 th:text = "${user.friendUser.username}"></h1>
+
+    <div class="col-3">
+        <span th:text = "'Password: ' + ${user.friendUser.password}" sec:authorize="hasRole('ADMIN')"></span>
+        <a th:if="${is_friend}" class="btn btn-danger" th:href="@{'/friends/delete/' + ${user.friendUser.username}}">Delete from friends</a>
+        <a th:if="${!is_friend}" class="btn btn-success" th:href="@{'/friends/add/' + ${user.friendUser.username}}">Add to friends</a>
+        <td><a class="btn btn-info" th:href="@{'/messages/' + ${user.friendUser.username}}" th:if="${user.friendUser.enabled}">Messages</a></td>
+        <span></span>
+        <a th:if="${user.friendUser.enabled}" class="badge badge-info" th:href="@{'/users/unable/' + ${user.friendUser.username}}" sec:authorize="hasRole('ADMIN')">Unable user</a>
+        <a th:if="${!user.friendUser.enabled}" class="badge badge-info" th:href="@{'/users/revive/' + ${user.friendUser.username}}" sec:authorize="hasRole('ADMIN')">Enable user</a>
+        <a th:if="${!user.friendUser.enabled}" class="badge badge-danger" th:href="@{'/friends/users/delete/' + ${user.friendUser.username}}" sec:authorize="hasRole('ADMIN')">DELETE user</a>
+    </div>
+</div>
+</body>
+</html>
