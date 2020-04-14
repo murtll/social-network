@@ -3,7 +3,7 @@ package com.murtll.webapp.entities
 import javax.persistence.*
 
 @Entity
-@Table(name = "webapp.messages")
+@Table(name = "messages")
 class Message(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

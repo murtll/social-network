@@ -6,7 +6,7 @@ import javax.persistence.Id
 import javax.persistence.Table
 
 @Entity
-@Table(name = "webapp.authorities")
+@Table(name = "authorities")
 class Authority (
         @Id
         @Column(name = "username")

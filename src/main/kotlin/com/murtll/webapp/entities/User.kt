@@ -3,7 +3,7 @@ package com.murtll.webapp.entities
 import javax.persistence.*
 
 @Entity
-@Table(name = "webapp.users")
+@Table(name = "users")
 data class User(
         @Id
         @Column(name = "username")

@@ -4,7 +4,7 @@ import java.io.Serializable
 import javax.persistence.*
 
 @Entity
-@Table(name = "webapp.friend_items")
+@Table(name = "friend_items")
 class FriendItem (
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
