@@ -36,10 +36,10 @@ object RegisterController {
 
     @RequestMapping("/register", method = [RequestMethod.POST])
     fun registerSubmit(@ModelAttribute register: Register, model: Model): String {
-        if (!userService.existUser(register.userName.toString())){
+        if (!userService.existUser(register.userName.toString())) {
             userService.addUser(register.userName.toString(), register.password.toString())
             authorityService.addRole(register.userName.toString(), "ROLE_USER")
-            return "login"
+            return "redirect:/mypage"
         } else {
             model.addAttribute("message", "This username already exists, please choose another")
             return "register"

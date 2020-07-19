@@ -25,7 +25,7 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
         http.authorizeRequests()
-                .antMatchers("/register").permitAll()
+                .antMatchers("/register", "/logout", "/login").permitAll()
                 .anyRequest().hasAnyRole("ADMIN", "USER")
                 .and().formLogin().loginPage("/login").permitAll()
                 .loginProcessingUrl("/check_user")
