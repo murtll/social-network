@@ -9,6 +9,10 @@ import java.util.*
 @Service
 class UserService {
     private lateinit var usersRepo: UsersRepo
+    @Autowired
+    private lateinit var friendService: FriendService
+    @Autowired
+    private lateinit var messageService: MessageService
 
     @Autowired
     fun setFriendRepo(_userRepo: UsersRepo) {
@@ -25,7 +29,8 @@ class UserService {
 
     fun unableUserByUsername(username: String) {
 //        usersRepo.deleteByUsername(username)
-        val updatedUser = User(username, usersRepo.findOneByUsername(username).password, false)
+        val updatedUser = usersRepo.findOneByUsername(username)
+        updatedUser.enabled = false
         usersRepo.save(updatedUser)
     }
 
@@ -42,11 +47,15 @@ class UserService {
     }
 
     fun reviveUserByUsername(username: String) {
-        val updatedUser = User(username, usersRepo.findOneByUsername(username).password, true)
+        val updatedUser = usersRepo.findOneByUsername(username)
+        updatedUser.enabled = true
         usersRepo.save(updatedUser)
     }
 
     fun deleteUserByUsername(username: String) {
+        friendService.deleteAllFriendsOfUser(username)
+        messageService.deleteAllUserMessages(username)
         usersRepo.deleteByUsername(username)
+
     }
 }

@@ -21,8 +21,8 @@
 
     <div class="col-3">
         <span th:text = "'Password: ' + ${user.friendUser.password}" sec:authorize="hasRole('ADMIN')"></span>
-        <a th:if="${is_friend}" class="btn btn-danger" th:href="@{'/friends/delete/' + ${user.friendUser.username}}">Delete from friends</a>
-        <a th:if="${!is_friend}" class="btn btn-success" th:href="@{'/friends/add/' + ${user.friendUser.username}}">Add to friends</a>
+        <a th:if="${is_friend && !is_me}" class="btn btn-danger" th:href="@{'/friends/delete/' + ${user.friendUser.username}}">Delete from friends</a>
+        <a th:if="${!is_friend && !is_me}" class="btn btn-success" th:href="@{'/friends/add/' + ${user.friendUser.username}}">Add to friends</a>
         <td><a class="btn btn-info" th:href="@{'/messages/' + ${user.friendUser.username}}" th:if="${user.friendUser.enabled}">Messages</a></td>
         <span></span>
         <a th:if="${user.friendUser.enabled}" class="badge badge-info" th:href="@{'/users/unable/' + ${user.friendUser.username}}" sec:authorize="hasRole('ADMIN')">Unable user</a>

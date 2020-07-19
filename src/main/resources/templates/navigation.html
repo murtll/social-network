@@ -18,7 +18,7 @@
 <div class="row">
     <div class="col-3">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link" th:classappend="${activeTab == 'Profile' ? 'active' : ''}" id="v-pills-profile-tab" th:href="@{/page/murtll}" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
+            <a class="nav-link" th:classappend="${activeTab == 'Profile' ? 'active' : ''}" id="v-pills-profile-tab" th:href="@{/mypage}" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
             <a class="nav-link" th:classappend="${activeTab == 'Users' ? 'active' : ''}" id="v-pills-home-tab" th:href="@{/users}" role="tab" aria-controls="v-pills-home" aria-selected="false">Users</a>
             <a class="nav-link" th:classappend="${activeTab == 'Friends' ? 'active' : ''}" id="v-pills-friends-tab" th:href="@{/friends}" role="tab" aria-controls="v-pills-home" aria-selected="false">Friends</a>
             <a class="nav-link" th:classappend="${activeTab == 'Messages' ? 'active' : ''}" id="v-pills-messages-tab" th:href="@{/all_messages}" role="tab" aria-controls="v-pills-home" aria-selected="false">Messages</a>

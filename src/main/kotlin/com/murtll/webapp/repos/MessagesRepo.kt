@@ -9,6 +9,7 @@ import javax.transaction.Transactional
 
 @Repository
 interface MessagesRepo : JpaRepository <Message, Long> {
+    fun deleteAllByFromUserOrToUser(from: String, to: String)
     fun findAllByFromUserAndToUser(from: String, to: String): List<Message>
     fun findAllByFromUserOrToUser(from: String, to: String): List<Message>
 }

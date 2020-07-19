@@ -43,4 +43,11 @@ class MessageService {
     fun getMessagesByFromOrTo(username: String): List<Message> {
         return messagesRepo.findAllByFromUserOrToUser(username, username)
     }
+
+    fun deleteAllUserMessages(username: String){
+        val messages = messagesRepo.findAllByFromUserOrToUser(username, username)
+        messages.forEach {
+            messagesRepo.delete(it)
+        }
+    }
 }

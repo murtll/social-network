@@ -22,7 +22,7 @@ object MessageController {
     }
 
     @RequestMapping("/{name}", method = [RequestMethod.GET])
-    fun addFriend(model: Model, @PathVariable("name") name: String, principal: Principal): String {
+    fun showMessages(model: Model, @PathVariable("name") name: String, principal: Principal): String {
         val messages = messageService.getMessagesByFromAndTo(name, principal.name).toMutableList()
         messages.addAll(messageService.getMessagesByFromAndTo(principal.name, name))
         messages.sortBy { it.id }
@@ -33,7 +33,7 @@ object MessageController {
     }
 
     @RequestMapping("/{name}/send", method = [RequestMethod.POST])
-    fun registerSubmit(@ModelAttribute message: Message, model: Model, principal: Principal, @PathVariable("name") name: String): String {
+    fun sendMessage(@ModelAttribute message: Message, model: Model, principal: Principal, @PathVariable("name") name: String): String {
         message.run {
             fromUser = principal.name
             toUser = name
@@ -41,13 +41,7 @@ object MessageController {
             date = LocalDate.now().year * 365 + LocalDate.now().month.value * 30 + LocalDate.now().dayOfMonth
         }
         messageService.writeMessageToDB(message)
-        val messages = messageService.getMessagesByFromAndTo(name, principal.name).toMutableList()
-        messages.addAll(messageService.getMessagesByFromAndTo(principal.name, name))
-        messages.sortBy { it.id }
-        model.addAttribute("all_messages", messages)
-        model.addAttribute("message", Message())
-        model.addAttribute("username", name)
-        return "messages"
+        return "redirect:/messages/$name"
     }
 
 }

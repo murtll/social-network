@@ -46,6 +46,9 @@ object MainController {
     @GetMapping("/index")
     fun homePage() = "index"
 
+    @GetMapping("/error")
+    fun showError() = "error"
+
     @GetMapping("/users")
     fun friendsPage(model: Model): String {
         model.addAttribute("users", userService.getAllUsers())
@@ -56,9 +59,24 @@ object MainController {
     fun userPage(model: Model, @PathVariable("name") name: String, principal: Principal): String {
             val userItem = FriendItem(null, userService.getUserByUsername(principal.name), userService.getUserByUsername(name))
             model.addAttribute("user", userItem)
+            val isItMe = name == principal.name
             val isItFriendOfCurrent = friendService.isFriend(userService.getUserByUsername(name))
             model.addAttribute("is_friend", isItFriendOfCurrent)
+            model.addAttribute("is_me", isItMe)
             return "user-page"
+    }
+
+    @GetMapping("/mypage")
+    fun myPage(model: Model, principal: Principal): String {
+
+        val userItem = FriendItem(null, userService.getUserByUsername(principal.name), userService.getUserByUsername(principal.name))
+
+        val isItMe = true
+        val isItFriendOfCurrent = false
+        model.addAttribute("is_friend", isItFriendOfCurrent)
+        model.addAttribute("user", userItem)
+        model.addAttribute("is_me", isItMe)
+        return "user-page"
     }
 
     @GetMapping("/login")
@@ -85,7 +103,7 @@ object MainController {
     fun deleteUser(model: Model, @PathVariable("name") name: String): String {
         authorityService.deleteByUsername(name)
         userService.deleteUserByUsername(name)
-        model.addAttribute("users", userService.getAllUsers())
+//        model.addAttribute("users", userService.getAllUsers())
         return "redirect:/users"
     }
 

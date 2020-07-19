@@ -31,12 +31,15 @@ class AuthorityService {
     }
 
     fun unableByUsername(username: String) {
-        authoritiesRepo.findById(username).get().authority = "ROLE_NONE"
+        val authority = authoritiesRepo.findById(username).get()
+        authority.authority = "ROLE_NONE"
+        authoritiesRepo.save(authority)
     }
 
     fun reviveByUsername(username: String) {
-        authoritiesRepo.findById(username).get().authority = "ROLE_USER"
-
+        val authority = authoritiesRepo.findById(username).get()
+        authority.authority = "ROLE_USER"
+        authoritiesRepo.save(authority)
     }
 
     fun deleteByUsername(username: String) {
